@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { FlashMessagesService } from 'angular2-flash-messages';
+import { ToastrService } from 'ngx-toastr';
 import { UnitService } from '../../services/unit.service';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
@@ -30,7 +30,7 @@ export class SettingsComponent implements OnInit {
     public preferencesUpdateFailure: boolean;
 
     constructor(private formBuilder: FormBuilder, private authService: AuthService, private unitService: UnitService,
-        private userService: UserService, private router: Router, private flashMessageService: FlashMessagesService) {
+        private userService: UserService, private router: Router, private toastr: ToastrService) {
 
         this.userPreferencesForm = formBuilder.group({
 
@@ -72,10 +72,10 @@ export class SettingsComponent implements OnInit {
         this.userService.updateUserPreferences(this.userId, this.userPreferences).subscribe(
 
             data => {
-                this.flashMessageService.show('Settings updated.', { cssClass: 'alert-success' });
+                this.toastr.success('Settings updated.');
             },
             err => {
-                this.flashMessageService.show('Unable to update settings.', { cssClass: 'alert-danger' });
+                this.toastr.error('Unable to update settings.');
             }
         );
     }

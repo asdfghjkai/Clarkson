@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FlashMessagesService } from 'angular2-flash-messages';
+import { ToastrService } from 'ngx-toastr';
 
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
@@ -15,7 +15,7 @@ export class AdminComponent implements OnInit {
     public users: User[];
     public selectedUser: User;
 
-    constructor(private authService: AuthService, private userService: UserService, private flashMessageService: FlashMessagesService) {
+    constructor(private authService: AuthService, private userService: UserService, private toastr: ToastrService) {
     }
 
     ngOnInit() {
@@ -86,9 +86,9 @@ export class AdminComponent implements OnInit {
     public showErrorMessage(err: any) {
 
         if (typeof err.error.message === 'string') {
-            this.flashMessageService.show(err.error.message, { cssClass: 'alert-danger' });
+            this.toastr.error(err.error.message);
         } else {
-            this.flashMessageService.show(err.error.message.sqlMessage, { cssClass: 'alert-danger' });
+            this.toastr.error(err.error.message.sqlMessage);
         }
     }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
-import { FlashMessagesService } from 'angular2-flash-messages';
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../services/user.service';
 
 import { User } from '../../model/user';
@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
     public loading: boolean;
 
     constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService,
-        private flashMessageService: FlashMessagesService) {
+        private toastr: ToastrService) {
 
         this.registrationForm = formBuilder.group({
             'username': [null, Validators.required],
@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit {
             data => {
 
                 this.loading = false;
-                this.flashMessageService.show('Registration Sucessful. You can now log in.', { cssClass: 'alert-success' });
+                this.toastr.success('Registration Sucessful. You can now log in.');
                 this.router.navigate(['/login']);
             },
 

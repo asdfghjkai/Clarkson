@@ -8,7 +8,7 @@ import {
     ElementRef
 } from '@angular/core';
 
-import { FlashMessagesService } from 'angular2-flash-messages';
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../services/user.service';
 
 import { User } from '../../model/user';
@@ -28,7 +28,7 @@ export class AdminDeleteComponent implements OnInit {
     @Output()
     public deleteSuccess: EventEmitter<string> = new EventEmitter();
 
-    constructor(private userService: UserService, private flashMessageService: FlashMessagesService) {
+    constructor(private userService: UserService, private toastr: ToastrService) {
     }
 
     ngOnInit() {
@@ -47,7 +47,7 @@ export class AdminDeleteComponent implements OnInit {
 
                 this.closeModal();
                 this.deleteSuccess.emit(this.user.id);
-                this.flashMessageService.show('User deleted.', { cssClass: 'alert-success' });
+                this.toastr.success('User deleted.');
             },
 
             err => {
@@ -57,6 +57,6 @@ export class AdminDeleteComponent implements OnInit {
     }
 
     public showErrorMessage(error: any) {
-        this.flashMessageService.show('Error while deleting user. Reason: ' + error, { cssClass: 'alert-danger' });
+        this.toastr.error('Error while deleting user. Reason: ' + error);
     }
 }
