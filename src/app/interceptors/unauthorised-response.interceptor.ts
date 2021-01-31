@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators'
+
 import {
     HttpRequest,
     HttpHandler,
@@ -9,7 +11,7 @@ import {
     HttpErrorResponse
 } from '@angular/common/http';
 
-import 'rxjs/add/operator/do';
+
 
 @Injectable()
 export class UnauthorisedResponseInterceptor implements HttpInterceptor {
@@ -18,7 +20,7 @@ export class UnauthorisedResponseInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        return next.handle(request).do(
+        return next.handle(request).pipe(tap(
 
             (event: HttpEvent<any>) => { },
             (err: any) => {
@@ -32,6 +34,6 @@ export class UnauthorisedResponseInterceptor implements HttpInterceptor {
                     }
                 }
             }
-        );
+        ));
     }
 }

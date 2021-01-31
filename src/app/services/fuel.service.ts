@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-
-import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators'
 
 import { ApiService } from './api.service';
 import { Fuel } from '../model/fuel';
@@ -15,7 +14,7 @@ export class FuelService {
 
     public getFuelForVehicle(vehicleId: string, userPreferences: UserPreferences) {
 
-        return this.apiService.getFuelForVehicle(vehicleId).map(apiResponse => {
+        return this.apiService.getFuelForVehicle(vehicleId).pipe(map(apiResponse => {
 
             const consumptionConverter = new ConsumptionConverter(userPreferences);
 
@@ -30,7 +29,7 @@ export class FuelService {
             }
 
             return apiResponse;
-        });
+        }));
     }
 
     public getFuelLog(fuelLogId: string) {

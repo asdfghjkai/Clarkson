@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators'
 
 import { ApiService } from './api.service';
 
@@ -16,7 +16,7 @@ export class DashboardService {
 
     public getMonthlyFuelCosts() {
 
-        return this.apiService.getMonthlyFuelCosts().map(data => {
+        return this.apiService.getMonthlyFuelCosts().pipe(map(data => {
 
             const monthlyFuelCosts = new Map<number, FuelCostsByYear>();
 
@@ -37,7 +37,7 @@ export class DashboardService {
             }
 
             return monthlyFuelCosts;
-        });
+        }));
     }
 }
 
