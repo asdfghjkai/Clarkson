@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators'
 
 import { AuthCredentials } from '../model/auth-credentials';
 import { ApiService } from './api.service';
@@ -21,14 +22,14 @@ export class UserService {
     }
 
     getAllUsers() {
-        return this.apiService.getAllUsers().map(response => {
+        return this.apiService.getAllUsers().pipe(map(response => {
 
             response.users.sort((now, next) => {
                 return now.username > next.username ? 1 : -1;
             });
 
             return response;
-        });
+        }));
     }
 
     deleteUser(userId: string) {

@@ -10,7 +10,7 @@ import {
     ElementRef
 } from '@angular/core';
 
-import { FlashMessagesService } from 'angular2-flash-messages';
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../services/user.service';
 
 import { User } from '../../model/user';
@@ -30,7 +30,7 @@ export class AdminClearComponent implements OnInit {
     @Output()
     public clearSuccess: EventEmitter<string> = new EventEmitter();
 
-    constructor(private userService: UserService, private flashMessageService: FlashMessagesService) {
+    constructor(private userService: UserService, private toastr: ToastrService) {
     }
 
     ngOnInit() {
@@ -49,7 +49,7 @@ export class AdminClearComponent implements OnInit {
 
                 this.closeModal();
                 this.clearSuccess.emit(this.user.id);
-                this.flashMessageService.show('User data cleared.', { cssClass: 'alert-success' });
+                this.toastr.success('Success', 'User data cleared.');
             },
 
             err => {
@@ -59,6 +59,6 @@ export class AdminClearComponent implements OnInit {
     }
 
     public showErrorMessage(error: any) {
-        this.flashMessageService.show('Error while clearing data. Reason: ' + error, { cssClass: 'alert-danger' });
+        this.toastr.error('Error while clearing data. Reason: ' + error);
     }
 }

@@ -20,7 +20,7 @@
             <div class="form-group">
                 <label for="vin">Vehicle</label>
                 <select class="form-control" (change)="goToFuelLogs($event.target.value)">
-                    <option value="-1" disabled>Select Vehicle...</option>
+                    <option value="-1" disabled selected>Select Vehicle...</option>
                     <option *ngFor="let vehicle of vehicles" [value]="vehicle.id">{{vehicle.name}}</option>
                 </select>
             </div>
